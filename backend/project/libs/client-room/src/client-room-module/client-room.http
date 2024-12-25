@@ -1,0 +1,86 @@
+@baseUrl = http://localhost:4000/api
+@token = {{login.response.body.$.access_token}}
+
+# Login user by email and password
+# @name login
+
+POST {{baseUrl}}/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "alina@gmail.com",
+  "password": "1234567"
+}
+###
+
+
+# Add friend to user
+POST {{baseUrl}}/client/friend/174 HTTP/1.1
+Authorization: Bearer {{token}}
+###
+
+# Delete friend from user
+DELETE {{baseUrl}}/client/friend/174 HTTP/1.1
+Authorization: Bearer {{token}}
+
+###
+
+# Get friends
+
+GET {{baseUrl}}/client/friends/ HTTP/1.1
+Authorization: Bearer {{token}}
+###
+
+# show all balance
+GET {{baseUrl}}/client/balance HTTP/1.1
+Authorization: Bearer {{token}}
+###
+
+# Use training
+
+DELETE  {{baseUrl}}/client/training/110 HTTP/1.1
+Authorization: Bearer {{token}}
+###
+
+
+# Post feedback
+
+POST {{baseUrl}}/feedbacks/create HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "trainingId": 111,
+  "rating": 4,
+  "text": "Вроде нормальная тренировка, но изюминки нету... Минимум 100 символов это сильно! Очень мнооооогооооооооо"
+}
+###
+
+# add Order training
+
+POST {{baseUrl}}/client/order HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "type": "абонемент",
+  "trainerId": 1,
+  "trainingId": 1,
+  "price": 12,
+  "quantity": 10,
+  "typeOfPayment": "visa"
+}
+###
+
+# Toggle subscribe to trainer
+
+POST {{baseUrl}}/client/subscribe/203 HTTP/1.1
+Authorization: Bearer {{token}}
+###
+
+# Check subscribe to trainer
+
+POST {{baseUrl}}/client/check-subscribe/203 HTTP/1.1
+Authorization: Bearer {{token}}
+###
+

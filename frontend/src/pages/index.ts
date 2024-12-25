@@ -1,0 +1,17 @@
+export { default as MainPage } from './main-page/main-page';
+export { default as IntroPage } from './intro-page/intro-page';
+export { default as LoginPage } from './login-page/login-page';
+export { default as RegisterPage } from './register-page/register-page';
+export { default as AccountPage } from './account-page/account-page';
+export { default as QuestionaryPage } from './questionary-page/questionary-page';
+export { default as TrainingCatalogPage } from './training-catalog-page/training-catalog-page';
+export { default as MyPurchasesPage } from './my-purchases-page/my-purchases-page';
+export { default as UserPage } from './user-page/user-page';
+export { default as TrainingPage } from './training-page/training-page';
+export { default as NotFoundPage } from './not-found-page/not-found-page';
+export { default as FriendsPage } from './friends-page/friends-page';
+export { default as BalancePage } from './balance-page/balance-page';
+export { default as CoachTrainingsPage } from './coach-trainings-page/coach-trainings-page';
+export { default as OrdersPage } from './orders-page/orders-page';
+export { default as CreateTrainingPage } from './create-training-page/create-training-page';
+export { default as UsersCatalogPage } from './users-catalog-page/users-catalog-page';

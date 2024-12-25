@@ -1,0 +1,116 @@
+
+@baseUrl = http://localhost:4000/api
+@token = {{login.response.body.$.access_token}}
+@refreshToken = {{login.response.body.$.refresh_token}}
+
+
+
+# Create a new user trainer
+POST {{baseUrl}}/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Alina",
+  "email": "westa@gmail.com",
+  "avatar": "avatar.jpg",
+  "password": "1234567",
+  "sex": "женский",
+  "birthDate": "1996-09-17T00:00:00.000Z",
+  "role": "тренер",
+  "description": "ffffffffffffffffffffffff!",
+  "location": "Пионерская",
+  "trainer": {
+    "certificates": ["sertificate.pdf"],
+    "merits": "!",
+    "isPersonalTraining": true
+  },
+  "level": "профессионал",
+  "typesOfTraining": ["кроссфит", "бег", "бокс"]
+}
+###
+
+# Create a new user qclient
+POST {{baseUrl}}/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Alina",
+  "email": "alina@gmail.com",
+  "avatar": "avatar.jpg",
+  "password": "1234567",
+  "sex": "женский",
+  "birthDate": "1996-09-17T00:00:00.000Z",
+  "role": "пользователь",
+  "description": "!",
+  "location": "Удельная",
+  "client": {
+  "timeOfTraining": "30-50 мин",
+  "caloryLosingPlanTotal": 2000,
+  "caloryLosingPlanDaily": 1000,
+  "isReady": true
+  },
+  "level": "профессионал",
+  "typesOfTraining": ["кроссфит", "бег", "бокс"]
+}
+
+###
+# Login user by email and password
+# @name login
+POST {{baseUrl}}/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "alina@gmail.com",
+  "password": "1234567"
+}
+###
+
+
+# Update user
+PATCH {{baseUrl}}/users/update HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "level": "любитель",
+  "typesOfTraining": [ "йога", "бокс", "пилатес" ],
+  "client": {
+    "timeOfTraining": "30-50 мин",
+    "caloryLosingPlanTotal": 1345,
+    "caloryLosingPlanDaily": 1234
+  }
+}
+###
+
+# Get new JWT pair
+
+POST {{baseUrl}}/auth/refresh HTTP/1.1
+Authorization: Bearer {{refreshToken}}
+###
+
+# Check user token
+POST {{baseUrl}}/auth/check HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+###
+
+# Get user by ID
+GET {{baseUrl}}/users/50 HTTP/1.1
+Authorization: Bearer {{token}}
+###
+
+# Get user  feed
+GET {{baseUrl}}/users/feed
+?limit=4
+&page=1
+&role=пользователь
+&location=Пионерская,Удельная
+&typesOfTraining=йога,кроссфит HTTP/1.1
+Authorization: Bearer {{token}}
+###
+
+# Subscribe to trainer
+POST {{baseUrl}}/users/subscribe/1 HTTP/1.1
+Authorization: Bearer {{token}}
+

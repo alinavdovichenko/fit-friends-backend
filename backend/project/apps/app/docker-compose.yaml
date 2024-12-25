@@ -1,0 +1,44 @@
+version: '3.9'
+services:
+  readme.blog.postgres:
+    image: postgres:14-alpine
+    container_name: fitfriend.app.postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - readme.postgres.blog:/var/lib/postgresql/data
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d {POSTGRES_PASSWORD}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+    networks:
+      - fitfriend.app
+
+  readme.blog.pgadmin:
+    image: dpage/pgadmin4
+    container_name: fitfriend.app.pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - ${PGADMIN_LOCAL_PORT}:${PGADMIN_REMOTE_PORT}
+    depends_on:
+      - fitfriend.app.postgres
+    networks:
+      - fitfriend.app
+
+volumes:
+  fitfriend.postgres.app:
+
+networks:
+  fitfriend.app:
+      driver: bridge
